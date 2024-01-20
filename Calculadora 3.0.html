@@ -1,0 +1,174 @@
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: rgb(49, 47, 47);
+    }
+
+    table {
+        background-color: rgb(202, 199, 199);
+        padding: 10px;
+        border-style: solid;
+        border-radius: 10%;
+    }
+
+    .visor {
+        background-color: aliceblue;
+        border-style: solid;
+        border-radius: 5%;
+        text-align: right;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+
+    .teclas {
+        padding: 15px;
+        background-color: beige;
+        border-style: solid;
+        border-radius: 10%;
+        text-align: center;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+
+    .teclas-operacao {
+        padding: 15px;
+        background-color: rgb(240, 240, 145);
+        border-style: solid;
+        border-radius: 10%;
+        text-align: center;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+    }
+
+    .teclas:hover,
+    .teclas-operacao:hover {
+        background-color: gray;
+    }
+</style>
+
+<body>
+    <table>
+        <tr>
+            <td class="visor" colspan="4">
+                <p id="result"><input id="result" disabled></p>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td class="teclas" b7 onclick="mostrarDisplay('7')">7</td>
+            <td class="teclas" b8 onclick="mostrarDisplay('8')">8</td>
+            <td class="teclas" b9 onclick="mostrarDisplay('9')">9</td>
+            <td class="teclas-operacao" onclick="multiplicar(arrayProv)">x</td>
+        </tr>
+        <tr>
+            <td class="teclas" b4 onclick="mostrarDisplay('4')">4</td>
+            <td class="teclas" b5 onclick="mostrarDisplay('5')">5</td>
+            <td class="teclas" b6 onclick="mostrarDisplay('6')">6</td>
+            <td class="teclas-operacao" onclick="subtrair(arrayProv)">-</td>
+        </tr>
+        <tr>
+            <td class="teclas" b1 onclick="mostrarDisplay('1')">1</td>
+            <td class="teclas" b2 onclick="mostrarDisplay('2')">2</td>
+            <td class="teclas" b3 onclick="mostrarDisplay('3')">3</td>
+            <td class="teclas-operacao" onclick="somar(arrayProv)"> +</td>
+        </tr>
+        <tr>
+            <td class="teclas-operacao" onclick="limpar(arrayProv)">C</td>
+            <td class="teclas" b0 onclick="mostrarDisplay('0')">0</td>
+            <td class="teclas-operacao" onclick="divisao(arrayProv)">/</td>
+            <td class="teclas-operacao" onclick="resultado(num1)">=</td>
+        </tr>
+
+    </table>
+</body>
+
+<script>
+    let arrayProv = []
+    let res = 0
+    let num1 = 0
+    let num2 = 0
+    let operacao = 0
+    document.querySelector('[b0]').onclick = e => arrayProv.push(0)
+    document.querySelector('[b1]').onclick = e => arrayProv.push(1)
+    document.querySelector('[b2]').onclick = e => arrayProv.push(2)
+    document.querySelector('[b3]').onclick = e => arrayProv.push(3)
+    document.querySelector('[b4]').onclick = e => arrayProv.push(4)
+    document.querySelector('[b5]').onclick = e => arrayProv.push(5)
+    document.querySelector('[b6]').onclick = e => arrayProv.push(6)
+    document.querySelector('[b7]').onclick = e => arrayProv.push(7)
+    document.querySelector('[b8]').onclick = e => arrayProv.push(8)
+    document.querySelector('[b9]').onclick = e => arrayProv.push(9)
+
+    function somar(arrayProv) {
+        concatenarArray(arrayProv)
+        operacao = 1
+        limpar(arrayProv)
+    }
+
+    function subtrair(arrayProv) {
+        concatenarArray(arrayProv)
+        operacao = 2
+        limpar(arrayProv)
+    }
+
+    function multiplicar(arrayProv) {
+        concatenarArray(arrayProv)
+        operacao = 3
+        limpar(arrayProv)
+    }
+
+    function divisao(arrayProv) {
+        concatenarArray(arrayProv)
+        operacao = 4
+        limpar(arrayProv)
+    }
+
+    function limpar(arrayProv) {
+        limparDisplay(res)
+        while (arrayProv.length > 0) { arrayProv.pop() }
+    }
+
+    function concatenarArray(arrayProv) {
+        let total = ''
+        for (let i = 0; i < arrayProv.length; i++) {
+            total += arrayProv[i].toString()
+        }
+        num1 = parseInt(total)
+        num2 = parseInt(total)
+    }
+
+    function mostrarDisplay(value) {
+        document.getElementById('result').value += value
+    }
+
+    function limparDisplay() {
+        document.getElementById('result').value = ''
+    }
+
+    function resultado(num1) {
+        concatenarArray(arrayProv)
+        switch (operacao) {
+            case 1:
+                res = num1 + num2
+                document.getElementById("result").innerHTML = res
+                break
+            case 2:
+                res = num1 - num2
+                document.getElementById("result").innerHTML = res
+                break
+            case 3:
+                res = num1 * num2
+                document.getElementById("result").innerHTML = res
+                break
+            case 4:
+                res = num1 / num2
+                document.getElementById("result").innerHTML = res
+        }
+    }
+
+</script>

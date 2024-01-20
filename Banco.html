@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banco Tela inicial</title>
+</head>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        grid-template-areas:
+            'cabecalho'
+            'quadro-principal'
+            'corpo'
+            'rodape'
+    }
+
+    .cabecalho {
+        grid-area: cabecalho;
+        border-bottom: solid 1px;
+        height: 50px;
+    }
+
+    .quadro-principal {
+        margin: 30px 100px 30px 100px;
+        height: 300px;
+        border: solid 1px;
+    }
+
+    .corpo {
+        grid-area: corpo;
+
+    }
+
+    .rodape {
+        grid-area: rodape;
+
+    }
+
+    .quadro {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-rows: repeat(5, 1fr);
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
+        
+    }
+
+    .corpo {
+        height: 432px;
+        border-top: solid 1px;
+    }
+
+    .rodape {
+        height: 50px;
+        border-top: solid 1px;
+    }
+
+    .sub-quadro-1 {
+        grid-area: 2 / 2 / 4 / 3;
+        background-color: red;
+    }
+
+    .sub-quadro-2 {
+        grid-area: 2 / 3 / 3 / 4;
+        background-color: blue;
+    }
+
+    .sub-quadro-3 {
+        grid-area: 3 / 3 / 4 / 4;
+        background-color: green;
+    }
+</style>
+
+<body>
+    <div class="cabecalho">Isto é um cabeçalho</div>
+    <div class="quadro-principal">
+        <div class="quadro">
+            <div class="sub-quadro-1">Aqui irá o saldo</div>
+            <div class="sub-quadro-2">Aqui era o crédito</div>
+            <div class="sub-quadro-3">Aqui irá o investido</div>
+        </div>
+    </div>
+    <div class="corpo">
+        Aqui sera o corpo
+    </div>
+    <div class="rodape"> Aqui irá o rodapé</div>
+</body>
+
+</html>

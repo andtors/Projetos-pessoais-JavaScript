@@ -1,0 +1,170 @@
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #CBD4C2;
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    }
+
+    table {
+        border-style: solid;
+        border-radius: 5%;
+        background-color: #C3B299;
+        padding: 20px;
+
+    }
+
+    button {
+        float: right;
+        margin: 10px 4px;
+        width: 120px;
+        height: 40px;
+    }
+
+    input {
+        width: 200px;
+        height: 30px;
+        margin: 10px;
+    }
+
+    select {
+        float: right;
+        margin-right: 10px;
+    }
+
+    .resultado {
+        margin-left: 40px;
+    }
+
+    td {
+        margin-left: 20px;
+    }
+
+    .titulo {
+        font-size: 30px;
+        text-align: center;
+    }
+
+    .p {
+        padding: 5px;
+        font-size: 19px;
+
+    }
+</style>
+
+<body>
+    <table>
+        <tr>
+            <td colspan="2" class="titulo">Simulador de Juros Compostos </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td class="p">
+                &nbsp;&nbsp;&nbsp;Valor inicial<br>
+                <input placeholder="0,00" type="tel" id='valorInicial'>
+            </td>
+            <td class="p">&nbsp;&nbsp;&nbsp;&nbsp;Valor mensal<br>
+                <input placeholder="0,00" type="tel" id="valorMensal">
+            </td>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td class="p">&nbsp;&nbsp;&nbsp;Taxa de juros<br>
+                <input placeholder="0,00" type="tel" id="taxaDeJuros">
+            </td>
+            <td class="p">&nbsp;&nbsp;&nbsp;Periodo em anos
+                <br>
+                <input placeholder="0" type="tel" id="periodo">
+
+            </td>
+        <tr>
+            <td colspan="2" class="p">
+                <p class='resultado'>Valor total final: <input id="display" disabled></p>
+                <p class='resultado'>Valor total investido: <input id="displaySJuros" disabled></p>
+                <p class='resultado'>Total em Juros: <input id="displayJuros" disabled></p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button onclick="limparValores()">Limpar</button><button onclick="pegarValores()">Calcular</button>
+            </td>
+        </tr>
+    </table>
+</body>
+
+<script>
+    const arrayCalc = []
+    let vi = 0
+    let vm = 0
+    let tj = 0
+    let pr = 0
+    let taxaFinal = 0
+    let res = 0
+    let valorSemJuros = 0
+    let valorJuros = 0
+
+    function pegarValores() {
+        vi = parseInt(document.getElementById('valorInicial').value)
+        vm = parseInt(document.getElementById('valorMensal').value)
+        tj = parseInt(document.getElementById('taxaDeJuros').value)
+        pr = parseInt(document.getElementById('periodo').value)
+        jurosAoAnoAoMes(tj)
+        calcularJuros(vi, vm, tj, pr)
+        valorSemJurosCalc(vi, vm, pr)
+    }
+
+    function limparValores(vi, vm, tj, pr) {
+        vi, vm, tj, pr = 0
+        document.getElementById('valorInicial').value = ''
+        document.getElementById('valorMensal').value = ''
+        document.getElementById('taxaDeJuros').value = ''
+        document.getElementById('periodo').value = ''
+        document.getElementById('display').value = ''
+        document.getElementById('displaySJuros').value = ''
+        document.getElementById('displayJuros').value = ''
+        while (arrayCalc > 0) { arrayCalc.pop() }
+    }
+
+    function jurosAoAnoAoMes(tj) {
+        const taxaDecimal = tj / 100
+        const taxaMensal = Math.pow(1 + taxaDecimal, 1 / 12) - 1
+        const taxaMensalPorcentagem = taxaMensal * 100
+        taxaFinal = taxaMensalPorcentagem.toFixed(4)
+    }
+
+    function valorSemJurosCalc(vi, vm, pr) {
+        let calc = vi + (vm * (pr * 12))
+        valorSemJuros = calc
+        valorJurosCalc(res, valorSemJuros)
+        document.getElementById('displaySJuros').value = valorSemJuros.toFixed(2)
+    }
+
+    function valorJurosCalc(res, valorSemJuros) {
+        let calc = res - valorSemJuros
+        valorJuros = calc
+        document.getElementById('displayJuros').value = valorJuros.toFixed(2)
+    }
+
+    function calcularJuros(vi, vm, tj, pr) {
+
+        let prov = vi
+        arrayCalc.push(prov)
+        pr = pr * 12
+
+        for (let i = 0; i < pr; i++) {
+            prov += vm + (prov * (taxaFinal / 100))
+            prov.toFixed(2)
+            arrayCalc.push(prov)
+        }
+
+        res = arrayCalc[arrayCalc.length - 1]
+        document.getElementById('display').value = res.toFixed(2)
+    }
+
+</script>
